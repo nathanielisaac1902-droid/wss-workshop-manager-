@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../utils/app_colors.dart';
 import '../widgets/equipment_card.dart';
 
 class CatalogScreen extends StatelessWidget {
@@ -18,15 +19,52 @@ class CatalogScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Workshop Equipment Catalog'),
       ),
-      body: ListView.builder(
-        itemCount: equipmentList.length,
-        itemBuilder: (context, index) {
-          final item = equipmentList[index];
-          return EquipmentCard(
-            equipmentName: item['name']!,
-            serialTag: item['tag']!,
-          );
-        },
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(20.0),
+            margin: const EdgeInsets.all(12.0),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  AppColors.primaryGradientStart,
+                  AppColors.primaryGradientEnd,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16.0),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primaryGradientEnd.withValues(alpha: 0.35),
+                  blurRadius: 14,
+                  offset: const Offset(0, 6),
+                ),
+              ],
+              border: Border.all(color: Colors.white24, width: 1.5),
+            ),
+            child: const Text(
+              "Workshop Status: 85% Operational",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: equipmentList.length,
+              itemBuilder: (context, index) {
+                final item = equipmentList[index];
+                return EquipmentCard(
+                  equipmentName: item['name']!,
+                  serialTag: item['tag']!,
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
