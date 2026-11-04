@@ -1,8 +1,9 @@
+
 import 'package:flutter/material.dart';
 import '../models/equipment_item.dart';
 import '../utils/app_colors.dart';
 import '../widgets/equipment_card.dart';
-import 'details_screen.dart';
+import 'detail_screen.dart';
 
 class CatalogScreen extends StatelessWidget {
   const CatalogScreen({super.key});
@@ -70,17 +71,25 @@ class CatalogScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(16.0),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primaryGradientEnd.withValues(alpha: 0.35),
+                  color: AppColors.primaryGradientEnd
+                      .withValues(alpha: 0.35),
                   blurRadius: 14,
                   offset: const Offset(0, 6),
                 ),
               ],
-              border: Border.all(color: Colors.white24, width: 1.5),
+              border: Border.all(
+                color: Colors.white24,
+                width: 1.5,
+              ),
             ),
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.build_circle, color: Colors.white, size: 24),
+                Icon(
+                  Icons.build_circle,
+                  color: Colors.white,
+                  size: 24,
+                ),
                 SizedBox(width: 10),
                 Text(
                   "Workshop Status: 85% Operational",
@@ -98,16 +107,16 @@ class CatalogScreen extends StatelessWidget {
               itemCount: equipmentList.length,
               itemBuilder: (context, index) {
                 final item = equipmentList[index];
+
                 return InkWell(
                   onTap: () {
                     if (!item.isAvailable) return;
+
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailsScreen(
-                          equipmentName: item.name,
-                          serialTag: item.serial,
-                          ratePerHour: item.ratePerHour,
+                          item: item,
                         ),
                       ),
                     );

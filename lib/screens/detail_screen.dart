@@ -1,17 +1,15 @@
+
 import 'package:flutter/material.dart';
+import '../models/equipment_item.dart';
 import '../utils/app_colors.dart';
 import 'summary_screen.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final String equipmentName;
-  final String serialTag;
-  final double ratePerHour;
+  final EquipmentItem item;
 
   const DetailsScreen({
     super.key,
-    required this.equipmentName,
-    required this.serialTag,
-    required this.ratePerHour,
+    required this.item,
   });
 
   @override
@@ -27,7 +25,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.equipmentName),
+        title: Text(widget.item.name),
         backgroundColor: AppColors.primaryGradientStart,
         foregroundColor: Colors.white,
       ),
@@ -37,15 +35,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Serial: ${widget.serialTag}',
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
+              'Serial: ${widget.item.serial}',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
             ),
             const SizedBox(height: 24),
 
             // 1. Rental Duration Stepper (1–8 hours)
             const Text(
               'Rental Duration (Hours)',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
             const SizedBox(height: 8),
             Row(
@@ -58,7 +62,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 Text(
                   '$rentalHours hrs',
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.add_circle_outline),
@@ -73,7 +80,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
             // 2. Power Throttle Slider
             Text(
               'Power Throttle: ${throttleValue.toStringAsFixed(0)}%',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
             Slider(
               value: throttleValue,
@@ -90,7 +100,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
             // 3. Safety Switch
             SwitchListTile(
-              title: const Text('Safety Induction Completed'),
+              title: const Text(
+                'Safety Induction Completed',
+              ),
               value: isSafetyChecked,
               activeColor: AppColors.availableGreen,
               onChanged: (value) {
@@ -111,15 +123,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
                 onPressed: isSafetyChecked
                     ? () {
-                  final total = rentalHours * widget.ratePerHour;
+                  final total =
+                      rentalHours * widget.item.ratePerHour;
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => SummaryScreen(
-                        equipmentName: widget.equipmentName,
-                        serial: widget.serialTag,
+                        equipmentName: widget.item.name,
+                        serial: widget.item.serial,
                         rentalHours: rentalHours,
-                        ratePerHour: widget.ratePerHour,
+                        ratePerHour: widget.item.ratePerHour,
                         totalPrice: total,
                       ),
                     ),
@@ -128,7 +142,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     : null,
                 child: const Text(
                   'Proceed to Checkout',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
