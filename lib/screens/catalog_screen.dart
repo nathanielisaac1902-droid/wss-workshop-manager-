@@ -69,3 +69,10 @@ class CatalogScreen extends StatelessWidget {
     );
   }
 }
+
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => DetailsScreen(equipmentItem: item),
+  ),
+);
