@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/equipment_item.dart';
 import '../utils/app_colors.dart';
 import '../widgets/equipment_card.dart';
 import 'details_screen.dart';
@@ -8,12 +9,42 @@ class CatalogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> equipmentList = [
-      {'name': 'Digital Multimeter Pro', 'tag': 'SN-2026-001', 'rate': 15.0},
-      {'name': 'Oscilloscope 100MHz', 'tag': 'SN-2026-002', 'rate': 35.0},
-      {'name': 'Soldering Station Digital', 'tag': 'SN-2026-003', 'rate': 12.0},
-      {'name': 'Bench Power Supply', 'tag': 'SN-2026-004', 'rate': 20.0},
-      {'name': 'Cordless Rotary Tool', 'tag': 'SN-2026-005', 'rate': 10.0},
+    final List<EquipmentItem> equipmentList = [
+      EquipmentItem(
+        id: '1',
+        name: 'Creality Ender-3 Pro 3D Printer',
+        serial: 'WSS-3DP-01',
+        isAvailable: true,
+        ratePerHour: 12.0,
+      ),
+      EquipmentItem(
+        id: '2',
+        name: 'Epilog Zing 24 Laser Cutter',
+        serial: 'WSS-LC-04',
+        isAvailable: true,
+        ratePerHour: 25.0,
+      ),
+      EquipmentItem(
+        id: '3',
+        name: 'Shapeoko 4 CNC Router Mill',
+        serial: 'WSS-CNC-09',
+        isAvailable: false,
+        ratePerHour: 18.0,
+      ),
+      EquipmentItem(
+        id: '4',
+        name: 'Rigol 100MHz Digital Oscilloscope',
+        serial: 'WSS-OSC-12',
+        isAvailable: true,
+        ratePerHour: 8.0,
+      ),
+      EquipmentItem(
+        id: '5',
+        name: 'Digital Multimeter Pro',
+        serial: 'WSS-DMM-03',
+        isAvailable: true,
+        ratePerHour: 15.0,
+      ),
     ];
 
     return Scaffold(
@@ -24,9 +55,7 @@ class CatalogScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // Status Banner
           Container(
-            width: double.infinity,
             padding: const EdgeInsets.all(20.0),
             margin: const EdgeInsets.all(12.0),
             decoration: BoxDecoration(
@@ -48,39 +77,42 @@ class CatalogScreen extends StatelessWidget {
               ],
               border: Border.all(color: Colors.white24, width: 1.5),
             ),
-            child: const Text(
-              "Workshop Status: 85% Operational",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.build_circle, color: Colors.white, size: 24),
+                SizedBox(width: 10),
+                Text(
+                  "Workshop Status: 85% Operational",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
           ),
-
-          // Equipment List
           Expanded(
             child: ListView.builder(
               itemCount: equipmentList.length,
               itemBuilder: (context, index) {
                 final item = equipmentList[index];
-                return GestureDetector(
+                return InkWell(
                   onTap: () {
+                    if (!item.isAvailable) return;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailsScreen(
-                          equipmentName: item['name'],
-                          serialTag: item['tag'],
-                          ratePerHour: item['rate'],
+                          equipmentName: item.name,
+                          serialTag: item.serial,
+                          ratePerHour: item.ratePerHour,
                         ),
                       ),
                     );
                   },
-                  child: EquipmentCard(
-                    equipmentName: item['name'],
-                    serialTag: item['tag'],
-                  ),
+                  child: EquipmentCard(item: item),
                 );
               },
             ),

@@ -117,7 +117,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     MaterialPageRoute(
                       builder: (context) => SummaryScreen(
                         equipmentName: widget.equipmentName,
+                        serial: widget.serialTag,
                         rentalHours: rentalHours,
+                        ratePerHour: widget.ratePerHour,
                         totalPrice: total,
                       ),
                     ),

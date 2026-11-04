@@ -1,14 +1,14 @@
 class EquipmentItem {
   final String id;
   final String name;
-  final String model;
+  final String serial;          // or keep "model" if you prefer
   final bool isAvailable;
   final double ratePerHour;
 
-  EquipmentItem({
+  const EquipmentItem({
     required this.id,
     required this.name,
-    required this.model,
+    required this.serial,
     required this.isAvailable,
     required this.ratePerHour,
   });
