@@ -91,3 +91,14 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 }
+
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (context) => SummaryScreen(
+      equipmentName: widget.equipmentItem['name']!,
+      rentalHours: rentalHours,
+      totalPrice: rentalHours * 25.0, // Example calculation rate
+    ),
+  ),
+);
